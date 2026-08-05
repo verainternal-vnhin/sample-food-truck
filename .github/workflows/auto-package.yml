@@ -21,10 +21,17 @@ jobs:
 
       - name: package artifact
         run: |
-          export CODE_SIGNING_ALLOWED=NO 
-          export CODE_SIGN_IDENTITY="" 
-          export CODE_SIGNING_REQUIRED=NO
-          xcodebuild clean archive -project 'Food Truck.xcodeproj' -scheme 'Food Truck' -destination 'generic/platform=iOS' -configuration Debug -archivePath 'Food Truck.xcarchive' DEBUG_INFORMATION_FORMAT=dwarf-with-dsym ENABLE_BITCODE=NO
+          xcodebuild clean archive \
+            -project 'Food Truck.xcodeproj' \
+            -scheme 'Food Truck' \
+            -destination 'generic/platform=iOS' \
+            -configuration Debug \
+            -archivePath 'Food Truck.xcarchive' \
+            DEBUG_INFORMATION_FORMAT=dwarf-with-dsym \
+            ENABLE_BITCODE=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO
 
       - name: save artifact
         uses: actions/upload-artifact@v4
