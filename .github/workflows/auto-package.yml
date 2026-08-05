@@ -1,1 +1,23 @@
 
+name: autopackage_and_policy_scan
+
+on:
+  workflow_dispatch:
+
+jobs:
+  checkout-and-package:
+    runs-on: macos-latest
+  
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: package artifact
+        run: |
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+          ./veracode package -av -s . -o veracode-artifacts
+
+      - name: save artifact
+        uses: actions/upload-artifact@v4
+        with:
+            name: veracode-artifact
+            path: veracode-artifacts
