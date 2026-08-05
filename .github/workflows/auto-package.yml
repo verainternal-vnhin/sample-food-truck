@@ -21,8 +21,7 @@ jobs:
 
       - name: package artifact
         run: |
-          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-          ./veracode package -av -s . -o veracode-artifacts
+          xcodebuild clean archive -project 'Food Truck.xcodeproj' -scheme 'Food Truck' -destination 'generic/platform=iOS' -configuration Debug -archivePath 'Food Truck.xcarchive' DEBUG_INFORMATION_FORMAT=dwarf-with-dsym ENABLE_BITCODE=NO
 
       - name: save artifact
         uses: actions/upload-artifact@v4
