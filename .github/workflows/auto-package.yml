@@ -19,19 +19,17 @@ jobs:
           brew tap veracode/tap
           brew install veracode/tap/gen-ir
 
+      - name: disable code-signing
+        run: |
+          echo 'CODE_SIGNING_REQUIRED = NO
+          CODE_SIGNING_ALLOWED = NO
+          CODE_SIGN_IDENTITY = ' > unsigned.xcconfig
+
       - name: package artifact
         run: |
-          xcodebuild clean archive \
-            -project 'Food Truck.xcodeproj' \
-            -scheme 'Food Truck' \
-            -destination 'generic/platform=iOS' \
-            -configuration Debug \
-            -archivePath 'Food Truck.xcarchive' \
-            DEBUG_INFORMATION_FORMAT=dwarf-with-dsym \
-            ENABLE_BITCODE=NO \
-            CODE_SIGNING_ALLOWED=NO \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO
+          export XCODE_XCCONFIG_FILE="unsigned.xcconfig"
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+          ./veracode package -av -s source-code -o veracode-artifacts
 
       - name: save artifact
         uses: actions/upload-artifact@v4
