@@ -29,7 +29,7 @@ jobs:
         run: |
           export XCODE_XCCONFIG_FILE="unsigned.xcconfig"
           curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-          ./veracode package -av -s source-code -o veracode-artifacts
+          ./veracode package -av -s . -o veracode-artifacts
 
       - name: save artifact
         uses: actions/upload-artifact@v4
