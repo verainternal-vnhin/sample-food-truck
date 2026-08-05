@@ -14,8 +14,7 @@ jobs:
 
       - name: install gen-ir
         run: |
-          brew trust veracode/tap
-          brew update
+          brew trust veracode/homebrew-tap
           brew install "gen-ir"
 
       - name: package artifact
